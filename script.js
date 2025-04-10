@@ -18,6 +18,7 @@ class PomodoroTimer {
         this.isRunning = false;
         this.pomodoroCount = 0;
         this.initialTime = 25 * 60; // Store initial time for progress calculation
+        this.baseTitle = 'Pomodoro Timer';
         
         this.durations = {
             pomodoro: 25,
@@ -196,6 +197,7 @@ class PomodoroTimer {
             // Clear the current interval before switching modes
             clearInterval(this.timerInterval);
             this.isRunning = false;
+            document.title = this.baseTitle; // Reset title when timer completes
             
             if (currentMode === 'Pomodoro') {
                 this.pomodoroCount++;
@@ -237,13 +239,14 @@ class PomodoroTimer {
         this.isRunning = false;
         this.startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         clearInterval(this.timerInterval);
+        document.title = this.baseTitle; // Reset title when paused
     }
 
     resetTimer() {
         this.pauseTimer();
         const activeBtn = document.querySelector('.timer-btn.active');
         this.timeLeft = parseInt(activeBtn.dataset.time) * 60;
-        this.initialTime = this.timeLeft; // Update initial time
+        this.initialTime = this.timeLeft;
         this.updateDisplay();
         this.updateSessionDots();
     }
@@ -252,8 +255,15 @@ class PomodoroTimer {
         const minutes = Math.floor(this.timeLeft / 60);
         const seconds = this.timeLeft % 60;
         
+        const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
         this.minutesElement.textContent = minutes.toString().padStart(2, '0');
         this.secondsElement.textContent = seconds.toString().padStart(2, '0');
+        
+        // Update the page title with the current mode and time
+        const activeBtn = document.querySelector('.timer-btn.active');
+        const mode = activeBtn.textContent.trim();
+        document.title = this.isRunning ? `${timeString} - ${mode}` : this.baseTitle;
     }
 }
 
