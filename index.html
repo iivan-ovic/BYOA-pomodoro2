@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="timer-controls">
+            <div class="timer-mode">
+                <button class="timer-btn active" data-time="25">Pomodoro</button>
+                <div class="session-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            <div class="timer-mode">
+                <button class="timer-btn" data-time="5">Short Break</button>
+            </div>
+            <div class="timer-mode">
+                <button class="timer-btn" data-time="15">Long Break</button>
+            </div>
+        </div>
+        
+        <div class="timer-display">
+            <span id="minutes">25</span>:<span id="seconds">00</span>
+        </div>
+
+        <div class="timer-actions">
+            <button id="start-pause" class="action-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button id="refresh" class="action-btn">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button id="settings" class="action-btn">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-nav">
+                    <h3>Timer</h3>
+                </div>
+                <div class="settings-content">
+                    <div class="setting-item">
+                        <label for="pomodoro-duration">Pomodoro (minutes)</label>
+                        <input type="number" id="pomodoro-duration" min="1" max="60" value="25">
+                    </div>
+                    <div class="setting-item">
+                        <label for="short-break-duration">Short Break (minutes)</label>
+                        <input type="number" id="short-break-duration" min="1" max="60" value="5">
+                    </div>
+                    <div class="setting-item">
+                        <label for="long-break-duration">Long Break (minutes)</label>
+                        <input type="number" id="long-break-duration" min="1" max="60" value="15">
+                    </div>
+                    <div class="setting-item toggle-item">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="pomodoro-sequence">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="toggle-text">Pomodoro cycle: Pomodoro + Short Break x4 → Long Break</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="reset-all" class="modal-btn">Reset All</button>
+                <div class="modal-footer-right">
+                    <button id="close-modal" class="modal-btn">Close</button>
+                    <button id="save-changes" class="modal-btn primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,305 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.timer-controls {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.timer-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70px; /* Ensure consistent height for all timer modes */
+}
+
+.timer-btn {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.timer-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.timer-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.session-dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    align-items: center;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dot.filled {
+    background: white;
+}
+
+.dot.active {
+    width: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.dot.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: white;
+    width: var(--progress, 0%);
+    border-radius: 10px;
+}
+
+.timer-display {
+    font-size: 6rem;
+    font-weight: bold;
+    margin: 2rem 0;
+    font-family: 'Courier New', monospace;
+}
+
+.timer-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    color: white;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.modal-body {
+    display: flex;
+    min-height: 300px;
+}
+
+.settings-nav {
+    width: 200px;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-content {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.setting-item {
+    margin-bottom: 1.5rem;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.setting-item input {
+    width: 100%;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+}
+
+.setting-item input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Toggle Switch Styles */
+.toggle-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.toggle-text {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Modal Footer Styles */
+.modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-footer-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.modal-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.modal-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-btn.primary {
+    background: #4CAF50;
+}
+
+.modal-btn.primary:hover {
+    background: #45a049;
+} 
